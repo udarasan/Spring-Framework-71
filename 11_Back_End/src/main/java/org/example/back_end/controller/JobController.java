@@ -2,6 +2,7 @@ package org.example.back_end.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.back_end.dto.JobDTO;
+import org.example.back_end.repository.JobRepository;
 import org.example.back_end.service.JobService;
 import org.example.back_end.service.impl.JobServiceImpl;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,11 @@ public class JobController {
         return jobService.getAllJobs();
     }
     @PatchMapping("status/{id}")
-    public void changeStatus(@PathVariable String id){
+    public void changeStatus(@PathVariable("id") String id){
         jobService.changeJobStatus(id);
+    }
+    @GetMapping("search/{keyword}")
+    public List<JobDTO> searchJob(@PathVariable("keyword") String keyword){
+        return jobService.getAllJobsByKeyword(keyword);
     }
 }
