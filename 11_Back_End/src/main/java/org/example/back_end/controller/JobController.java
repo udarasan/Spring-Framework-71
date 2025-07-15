@@ -3,7 +3,7 @@ package org.example.back_end.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.back_end.dto.JobDTO;
 import org.example.back_end.service.JobService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.example.back_end.service.impl.JobServiceImpl;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
