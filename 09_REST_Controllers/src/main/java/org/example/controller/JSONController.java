@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.dto.UCity;
 import org.example.dto.UserDTO;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +14,13 @@ public class JSONController {
         return "saveUser";
     }
 
-    @GetMapping("get")
+    @GetMapping(value = "get",produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO getUser() {
-/*        UserDTO userDTO = new UserDTO();
+        UserDTO userDTO = new UserDTO();
         userDTO.setuId("U001");
-        userDTO.setuName("User 1");
-        userDTO.setuAddress(25);*/
-        return new UserDTO();
+        userDTO.setuName("User 001");
+        userDTO.setuAddress("Address");
+        userDTO.setuCity(new UCity("Panadura","13400"));
+        return userDTO;
     }
 }
