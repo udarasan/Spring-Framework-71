@@ -18,6 +18,7 @@ public class JobServiceImpl implements JobService {
     private final JobRepository jobRepository;
     private final ModelMapper modelMapper;
 
+
     @Override
     public void saveJob(JobDTO jobDTO) {
         jobRepository.save(modelMapper.map(jobDTO, Job.class));
@@ -32,5 +33,10 @@ public class JobServiceImpl implements JobService {
     public List<JobDTO> getAllJobs() {
         List<Job> allJobs=jobRepository.findAll();
         return modelMapper.map(allJobs,new TypeToken<List<JobDTO>>(){}.getType());
+    }
+
+    @Override
+    public void changeJobStatus(String id) {
+        jobRepository.updateJobStatus(id);
     }
 }

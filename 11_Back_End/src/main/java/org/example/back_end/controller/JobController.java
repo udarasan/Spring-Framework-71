@@ -20,6 +20,7 @@ public class JobController {
     public void createJob(@RequestBody JobDTO jobDTO){
         jobService.saveJob(jobDTO);
     }
+
     @PutMapping("edit")
     public void updateJob(@RequestBody JobDTO jobDTO){
         jobService.updateJob(jobDTO);
@@ -27,5 +28,9 @@ public class JobController {
     @GetMapping("alljobs")
     public List<JobDTO> getAllJobs(){
         return jobService.getAllJobs();
+    }
+    @PatchMapping("status/{id}")
+    public void changeStatus(@PathVariable String id){
+        jobService.changeJobStatus(id);
     }
 }

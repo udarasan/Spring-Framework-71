@@ -9,4 +9,7 @@ public interface JobService {
     public void updateJob(JobDTO jobDTO);
 
     List<JobDTO> getAllJobs();
+
+
+    void changeJobStatus(String id);
 }
