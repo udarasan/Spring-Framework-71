@@ -5,6 +5,9 @@ import org.example.back_end.dto.JobDTO;
 import org.example.back_end.repository.JobRepository;
 import org.example.back_end.service.JobService;
 import org.example.back_end.service.impl.JobServiceImpl;
+import org.example.back_end.util.APIResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,30 +15,34 @@ import java.util.List;
 @RequestMapping("api/v1/job")
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin
 public class JobController {
-
     //constructor injection
     private final JobService jobService;
 
     @PostMapping("create")
-    public void createJob(@RequestBody JobDTO jobDTO){
+    public ResponseEntity<APIResponse> createJob(@RequestBody JobDTO jobDTO){
         jobService.saveJob(jobDTO);
+        return new ResponseEntity(new APIResponse(200,"Job Created Successfully",null), HttpStatus.CREATED);
     }
-
     @PutMapping("edit")
-    public void updateJob(@RequestBody JobDTO jobDTO){
+    public ResponseEntity<APIResponse> updateJob(@RequestBody JobDTO jobDTO){
         jobService.updateJob(jobDTO);
+        return new ResponseEntity(new APIResponse(200,"Job Updated Successfully",null), HttpStatus.OK);
     }
     @GetMapping("alljobs")
-    public List<JobDTO> getAllJobs(){
-        return jobService.getAllJobs();
+    public ResponseEntity<APIResponse> getAllJobs(){
+        List<JobDTO> jobDTOS=jobService.getAllJobs();
+        return new ResponseEntity(new APIResponse(200, "Success", jobDTOS),HttpStatus.OK);
     }
     @PatchMapping("status/{id}")
-    public void changeStatus(@PathVariable("id") String id){
+    public ResponseEntity<APIResponse> changeStatus(@PathVariable("id") String id){
         jobService.changeJobStatus(id);
+        return new ResponseEntity(new APIResponse(200,"Job Status Changed Successfully",null), HttpStatus.OK);
     }
     @GetMapping("search/{keyword}")
-    public List<JobDTO> searchJob(@PathVariable("keyword") String keyword){
-        return jobService.getAllJobsByKeyword(keyword);
+    public ResponseEntity<APIResponse> searchJob(@PathVariable("keyword") String keyword){
+        jobService.getAllJobsByKeyword(keyword);
+        return new ResponseEntity(new APIResponse(200,"Job Found Successfully",null), HttpStatus.OK);
     }
 }
