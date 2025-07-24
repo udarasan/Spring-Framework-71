@@ -1,5 +1,6 @@
 package org.example.back_end.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.back_end.dto.JobDTO;
 import org.example.back_end.repository.JobRepository;
@@ -20,13 +21,14 @@ public class JobController {
     //constructor injection
     private final JobService jobService;
 
+    //bean validation
     @PostMapping("create")
-    public ResponseEntity<APIResponse> createJob(@RequestBody JobDTO jobDTO){
+    public ResponseEntity<APIResponse> createJob(@Valid @RequestBody JobDTO jobDTO){
         jobService.saveJob(jobDTO);
         return new ResponseEntity(new APIResponse(200,"Job Created Successfully",null), HttpStatus.CREATED);
     }
     @PutMapping("edit")
-    public ResponseEntity<APIResponse> updateJob(@RequestBody JobDTO jobDTO){
+    public ResponseEntity<APIResponse> updateJob(@Valid @RequestBody JobDTO jobDTO){
         jobService.updateJob(jobDTO);
         return new ResponseEntity(new APIResponse(200,"Job Updated Successfully",null), HttpStatus.OK);
     }

@@ -3,6 +3,7 @@ package org.example.back_end.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.example.back_end.dto.JobDTO;
 import org.example.back_end.entity.Job;
+import org.example.back_end.exception.AllReadyFoundException;
 import org.example.back_end.exception.ResourceNotFoundException;
 import org.example.back_end.repository.JobRepository;
 import org.example.back_end.service.JobService;
@@ -36,7 +37,8 @@ public class JobServiceImpl implements JobService {
         if (allJobs.isEmpty()){
             throw new ResourceNotFoundException("No Job Found");
         }
-        return modelMapper.map(allJobs,new TypeToken<List<JobDTO>>(){}.getType());
+        throw new AllReadyFoundException("new");
+        //return modelMapper.map(allJobs,new TypeToken<List<JobDTO>>(){}.getType());
     }
 
     @Override
