@@ -2,6 +2,7 @@ package org.example.back_end.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.back_end.dto.JobDTO;
 import org.example.back_end.repository.JobRepository;
 import org.example.back_end.service.JobService;
@@ -12,18 +13,26 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @RequestMapping("api/v1/job")
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin
+@Slf4j
 public class JobController {
+
     //constructor injection
     private final JobService jobService;
 
     //bean validation
     @PostMapping("create")
     public ResponseEntity<APIResponse> createJob(@Valid @RequestBody JobDTO jobDTO){
+        log.info("INFO - Job Created");
+        log.debug("DEBUG - Job Created");
+        log.error("ERROR - Job Created");
+        log.warn("WARN - Job Created");
+        log.trace("TRACE - Job Created");
         jobService.saveJob(jobDTO);
         return new ResponseEntity(new APIResponse(200,"Job Created Successfully",null), HttpStatus.CREATED);
     }
