@@ -3,6 +3,8 @@ package org.example.o13_auth_backend.service;
 import lombok.RequiredArgsConstructor;
 import org.example.o13_auth_backend.dto.AuthDTO;
 import org.example.o13_auth_backend.dto.AuthResponseDTO;
+import org.example.o13_auth_backend.dto.RegisterDTO;
+import org.example.o13_auth_backend.entity.Role;
 import org.example.o13_auth_backend.entity.User;
 import org.example.o13_auth_backend.repository.UserRepository;
 import org.example.o13_auth_backend.util.JwtUtil;
@@ -30,5 +32,19 @@ public class AuthService {
         // generate token
         String token=jwtUtil.generateToken(authDTO.username);
         return new AuthResponseDTO(token);
+    }
+    // register user
+    public String register(RegisterDTO registerDTO){
+        if (userRepository.findByUsername(registerDTO.getUsername())
+                .isPresent()){
+            throw new RuntimeException("Username already exists");
+        }
+        User user=User.builder()
+                .username(registerDTO.getUsername())
+                .password(passwordEncoder.encode(registerDTO.getPassword()))
+                .role(Role.valueOf(registerDTO.getRole()))
+                .build();
+        userRepository.save(user);
+        return "User registered successfully";
     }
 }
